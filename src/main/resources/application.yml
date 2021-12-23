@@ -1,0 +1,15 @@
+server:
+  port: 8888
+spring:
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        git:
+          ignore-local-ssh-settings: true
+          skip-ssl-validation: true
+          uri: https://github.com/victorgmacedo/config-server-properties
+          username: victorgmacedo
+          password: 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
+          default-label: main
