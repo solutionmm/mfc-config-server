@@ -33,3 +33,6 @@ jobs:
       - name: Run a multi-line script
         run: |
           ./gradlew build
+          
+      - name: List files after build
+        run: ls -l
