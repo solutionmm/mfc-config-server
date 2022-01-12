@@ -37,7 +37,6 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v1
 
       - name: Build Project
-        id: build-project
         run: |
           - ./gradlew build
 
