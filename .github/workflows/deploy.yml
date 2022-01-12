@@ -3,7 +3,7 @@ name: Deploy to Amazon ECS
 on:
   push:
     tags:
-      - release/*
+      - *
 
 env:
   AWS_REGION: sa-east-1                   # set this to your preferred AWS region, e.g. us-west-1
@@ -25,6 +25,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Build Project
+        run: ./gradlew build
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -36,15 +39,11 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
 
-      - name: Build Project
-        run: |
-          - ./gradlew build
-
       - name: Build, tag, and push image to Amazon ECR
         id: build-image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          IMAGE_TAG: ${{ github.sha }}
+          IMAGE_TAG: ${{ github.ref_name }}
         run: |
           # Build a docker container and
           # push it to ECR so that it can
